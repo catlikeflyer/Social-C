@@ -5,7 +5,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import TodoPage from "./pages/Todo";
 import Home from "./pages/Home";
 import { AuthProvider } from "./contexts/AuthContext";
-import PrivateRoute from "./components/PrivateRoute";
 import Signup from "./pages/SignUp";
 
 function App() {
@@ -18,9 +17,9 @@ function App() {
             <Route exact path="/">
               <Home />
             </Route>
-            <PrivateRoute exact path="/todo">
+            <Route exact path="/todo">
               <TodoPage />
-            </PrivateRoute>
+            </Route>
             <Route exact path="/signup">
               <Signup />
             </Route>

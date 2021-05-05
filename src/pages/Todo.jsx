@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Row, Col } from "reactstrap";
+import { Container, Row, Col, Form } from "reactstrap";
 import TodoCard from "../components/Card";
 import Header from "../components/Jumbotron";
 import TodoModal from "../components/TodoAdd";
@@ -15,7 +15,11 @@ const TodoPage = () => {
 
   return (
     <Container fluid={true} style={{ padding: "0px", position: "relative" }}>
-      <Header name="To-Do List" description="Our one-and-only things to do" page="todo"/>
+      <Header
+        name="To-Do List"
+        description="Our one-and-only things to do"
+        page="todo"
+      />
       <Container>
         <Row>
           {todos.map((todo) => {
@@ -31,7 +35,7 @@ const TodoPage = () => {
             );
           })}
         </Row>
-        <TodoModal buttonLabel="Add To-Do" />
+        <TodoModal />
       </Container>
     </Container>
   );

@@ -27,6 +27,7 @@ const Home = () => {
         <div>
           {error && <Alert color="danger">{error}</Alert>}
           <h2>{currentUser.email}</h2>
+          <h2>{currentUser.uid}</h2>
           <Button onClick={handleLogout}>Log Out</Button>
         </div>
       ) : (
