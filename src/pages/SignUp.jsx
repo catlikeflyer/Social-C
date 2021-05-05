@@ -9,7 +9,7 @@ const Signup = () => {
   const { currentUser } = useAuth();
 
   const addUser = async (userObj) => {
-    await db.collection("users").doc().set(userObj);
+    await db.collection("users").doc(userObj.email).set(userObj);
     console.log("Added new user");
   };
 

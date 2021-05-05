@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router";
 import { Col, Container, Row, Button, Alert } from "reactstrap";
-import LoginForm from "../components/LoginForm"
+import LoginForm from "../components/LoginForm";
 import { useAuth } from "../contexts/AuthContext";
 
 const Home = () => {

@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import { useEffect } from "react";
 import {
   Button,
   Modal,
@@ -10,32 +11,39 @@ import {
   Label,
   Input,
 } from "reactstrap";
-import { useAuth } from "../contexts/AuthContext";
 import { db } from "../firebase";
 
 const TodoModal = (props) => {
-  const { className } = props;
+  const { className, currentUser } = props;
   const [modal, setModal] = useState(false);
+  const [groupid, setGroupid] = useState("")
   const toggle = () => setModal(!modal);
   const titleRef = useRef();
   const placeRef = useRef();
   const descriptionRef = useRef();
   const imageRef = useRef();
-  const { currentUser } = useAuth();
 
   const addTodo = async (todoObj) => {
     await db.collection("todos").doc().set(todoObj);
   };
 
   const getUserGroup = async (currentUser) => {
-    return db
+    const groupID = await db
       .collection("users")
-      .doc(currentUser.uid)
+      .doc(currentUser.email)
       .get()
       .then((doc) => {
-        return doc.data().groupID;
+        console.log(doc.data());
+        setGroupid(doc.data().groupID)
       });
+
+    return groupID;
   };
+
+  useEffect(() => {
+    getUserGroup(currentUser)
+    console.log(currentUser)
+  }, [])
 
   const handleSubmit = (e) => {
     const todoObj = {
@@ -43,11 +51,13 @@ const TodoModal = (props) => {
       place: placeRef.current.value,
       description: descriptionRef.current.value,
       imageURL: imageRef.current.value,
+      groupID: groupid,
     };
+    
     e.preventDefault();
     addTodo(todoObj);
-    console.log("added todo");
-    console.log(getUserGroup(currentUser));
+    console.log(groupid)
+    console.log("added todo");;
   };
 
   return (

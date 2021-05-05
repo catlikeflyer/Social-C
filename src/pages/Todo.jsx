@@ -1,9 +1,10 @@
 import React from "react";
-import { Container, Row, Col, Form } from "reactstrap";
+import { Container, Row, Col } from "reactstrap";
 import TodoCard from "../components/Card";
 import Header from "../components/Jumbotron";
 import TodoModal from "../components/TodoAdd";
 import { todoData } from "./dummyData";
+import { useAuth } from "../contexts/AuthContext";
 
 // Firebase function to retrieve todo collection **Temporal dummy data
 const todoCollection = () => {
@@ -12,6 +13,7 @@ const todoCollection = () => {
 
 const TodoPage = () => {
   const todos = todoCollection();
+  const { currentUser } = useAuth();
 
   return (
     <Container fluid={true} style={{ padding: "0px", position: "relative" }}>
@@ -35,7 +37,7 @@ const TodoPage = () => {
             );
           })}
         </Row>
-        <TodoModal />
+        <TodoModal currentUser={currentUser}/>
       </Container>
     </Container>
   );
