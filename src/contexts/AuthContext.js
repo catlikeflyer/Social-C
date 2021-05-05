@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
 
 const AuthContext = React.createContext();
 
@@ -10,9 +10,28 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState();
+  const [groupID, setGroupID] = useState();
+  const [todos, setTodos] = useState([]);
+
+  const onTodos = async (groupID) => {
+    return db
+      .collection("todos")
+      .where("groupID", "==", groupID)
+      .get()
+      .then((querySnapshot) => {
+        var todoList = [];
+        querySnapshot.forEach((doc) => {
+          todoList.push(doc.data());
+        });
+        setTodos(todoList);
+      })
+      .catch((error) => {
+        console.log("Error getting documents: ", error);
+      });
+  };
 
   const signup = (email, password) => {
-    return auth.createUserWithEmailAndPassword(email, password)
+    return auth.createUserWithEmailAndPassword(email, password);
   };
 
   const login = (email, password) => {
@@ -23,10 +42,27 @@ export function AuthProvider({ children }) {
     return auth.signOut();
   };
 
+  const getUserGroup = async (currentUser) => {
+    const groupID = await db
+      .collection("users")
+      .doc(currentUser.email)
+      .get()
+      .then((doc) => {
+        console.log(doc.data());
+        setGroupID(doc.data().groupID);
+      });
+
+    return groupID;
+  };
+
   useEffect(() => {
     const unsub = auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
       setLoading(false);
+      if (user) {
+        getUserGroup(user);
+        //onTodos(groupID);
+      }
     });
 
     return unsub;
@@ -37,6 +73,8 @@ export function AuthProvider({ children }) {
     signup,
     login,
     logout,
+    groupID,
+    todos,
   };
 
   return (

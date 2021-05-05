@@ -12,8 +12,8 @@ const todoCollection = () => {
 };
 
 const TodoPage = () => {
-  const todos = todoCollection();
-  const { currentUser } = useAuth();
+  const todosi = todoCollection();
+  const { groupID, todos } = useAuth();
 
   return (
     <Container fluid={true} style={{ padding: "0px", position: "relative" }}>
@@ -22,9 +22,10 @@ const TodoPage = () => {
         description="Our one-and-only things to do"
         page="todo"
       />
+      <h1>{groupID}{JSON.stringify(todos)}</h1>
       <Container>
         <Row>
-          {todos.map((todo) => {
+          {todosi.map((todo) => {
             return (
               <Col
                 md="4"
@@ -37,7 +38,7 @@ const TodoPage = () => {
             );
           })}
         </Row>
-        <TodoModal currentUser={currentUser}/>
+        <TodoModal groupID={groupID} />
       </Container>
     </Container>
   );

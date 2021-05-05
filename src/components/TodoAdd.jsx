@@ -1,5 +1,4 @@
-import React, { useRef, useState } from "react";
-import { useEffect } from "react";
+import React, { useRef, useState} from "react";
 import {
   Button,
   Modal,
@@ -14,9 +13,8 @@ import {
 import { db } from "../firebase";
 
 const TodoModal = (props) => {
-  const { className, currentUser } = props;
+  const { className, groupID } = props;
   const [modal, setModal] = useState(false);
-  const [groupid, setGroupid] = useState("")
   const toggle = () => setModal(!modal);
   const titleRef = useRef();
   const placeRef = useRef();
@@ -27,37 +25,20 @@ const TodoModal = (props) => {
     await db.collection("todos").doc().set(todoObj);
   };
 
-  const getUserGroup = async (currentUser) => {
-    const groupID = await db
-      .collection("users")
-      .doc(currentUser.email)
-      .get()
-      .then((doc) => {
-        console.log(doc.data());
-        setGroupid(doc.data().groupID)
-      });
-
-    return groupID;
-  };
-
-  useEffect(() => {
-    getUserGroup(currentUser)
-    console.log(currentUser)
-  }, [])
-
   const handleSubmit = (e) => {
     const todoObj = {
       title: titleRef.current.value,
       place: placeRef.current.value,
       description: descriptionRef.current.value,
       imageURL: imageRef.current.value,
-      groupID: groupid,
+      groupID: groupID,
     };
-    
+
     e.preventDefault();
     addTodo(todoObj);
-    console.log(groupid)
-    console.log("added todo");;
+    console.log(groupID);
+    console.log("added todo");
+    toggle();
   };
 
   return (

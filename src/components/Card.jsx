@@ -10,7 +10,7 @@ import {
 } from "reactstrap";
 
 const TodoCard = (props) => {
-  const { title, subtitle, description, id, imageURL } = props;
+  const { title, subtitle, description, id, imageURL, groupID } = props;
 
   return (
     <div>
