@@ -5,7 +5,7 @@ import LoginForm from "../components/LoginForm";
 import { useAuth } from "../contexts/AuthContext";
 
 const Home = () => {
-  const { currentUser, logout } = useAuth();
+  const { currentUser, logout, username } = useAuth();
   const [error, setError] = useState();
   const history = useHistory();
 
@@ -26,8 +26,14 @@ const Home = () => {
       {currentUser ? (
         <div>
           {error && <Alert color="danger">{error}</Alert>}
-          <h2>{currentUser.email}</h2>
-          <h2>{currentUser.uid}</h2>
+          <h2>Welcome {username}</h2>
+          <h6>Your unique id is {currentUser.uid}</h6>
+          <p className="lead">
+            Social C is a private platform to be used with the closest of
+            people. You'll be able to share Bucket Lists to fulfill together
+            (to-do page), share memories, and many more things! As of now, just
+            the To Do functionality works, so make shure to give it a try!
+          </p>
           <Button onClick={handleLogout}>Log Out</Button>
         </div>
       ) : (

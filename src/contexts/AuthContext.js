@@ -11,6 +11,7 @@ export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState();
   const [groupID, setGroupID] = useState();
+  const [username, setUsername] = useState();
 
   const signup = (email, password) => {
     return auth.createUserWithEmailAndPassword(email, password);
@@ -24,14 +25,15 @@ export function AuthProvider({ children }) {
     return auth.signOut();
   };
 
-  const getUserGroup = async (currentUser) => {
+  const getUserData = async (currentUser) => {
     const groupID = await db
       .collection("users")
       .doc(currentUser.email)
       .get()
       .then((doc) => {
         console.log(doc.data());
-        setGroupID(doc.data().groupID);
+        setGroupID(doc.data().groupID)
+        setUsername(doc.data().username);
       });
 
     return groupID;
@@ -42,8 +44,7 @@ export function AuthProvider({ children }) {
       setCurrentUser(user);
       setLoading(false);
       if (user) {
-        getUserGroup(user);
-        //onTodos(groupID);
+        getUserData(user);
       }
     });
 
@@ -56,6 +57,7 @@ export function AuthProvider({ children }) {
     login,
     logout,
     groupID,
+    username
   };
 
   return (
