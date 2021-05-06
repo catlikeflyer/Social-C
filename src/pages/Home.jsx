@@ -15,7 +15,7 @@ const Home = () => {
     try {
       setError("");
       await logout();
-      history.pushState("/");
+      history.push("/");
     } catch {
       setError("Failed to logout");
     }
@@ -33,7 +33,7 @@ const Home = () => {
       ) : (
         <Row>
           <Col
-            md={{ size: 3, offset: 1 }}
+            md={{ size: 4, offset: 4 }}
             sm="12"
             style={{ height: "50vh", paddingTop: "10px" }}
             className="align-middle"

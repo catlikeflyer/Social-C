@@ -8,15 +8,30 @@ import {
   Nav,
   NavItem,
   NavLink,
-  NavbarText,
+  Button
 } from "reactstrap";
+import { useHistory } from "react-router";
 
 const Navigation = (props) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { currentUser } = useAuth();
+  const { currentUser, logout } = useAuth();
+  const [error, setError] = useState();
+  const history = useHistory()
 
   const toggle = () => setIsOpen(!isOpen);
 
+  const handleLogout = async (e) => {
+    e.preventDefault();
+
+    try {
+      setError("");
+      await logout();
+      history.push("/");
+    } catch {
+      setError("Failed to logout");
+      console.log(error)
+    }
+  };
   return (
     <div>
       <Navbar color="dark" dark expand="md" className="bg-info">
@@ -34,7 +49,7 @@ const Navigation = (props) => {
               </NavItem>
             )}
           </Nav>
-          <NavbarText>Simple Text</NavbarText>
+          {currentUser && <Button onClick={handleLogout}>Log Out</Button>}
         </Collapse>
       </Navbar>
     </div>

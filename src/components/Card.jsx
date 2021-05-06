@@ -10,7 +10,7 @@ import {
 } from "reactstrap";
 
 const TodoCard = (props) => {
-  const { title, subtitle, description, id, imageURL, groupID } = props;
+  const { title, place, description, imageURL, groupID, id } = props;
 
   return (
     <div>
@@ -19,7 +19,7 @@ const TodoCard = (props) => {
         <CardBody>
           <CardTitle tag="h5">{title}</CardTitle>
           <CardSubtitle tag="h6" className="mb-2 text-muted">
-            {subtitle}
+            {place}
           </CardSubtitle>
           <CardText>{description}</CardText>
           <Button>Button</Button>

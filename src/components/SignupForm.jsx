@@ -13,7 +13,7 @@ const SignupForm = (props) => {
   const [load, setLoad] = useState();
   const { signup, currentUser } = useAuth();
   const history = useHistory();
-  const privateKeys = ["1234doyi", "4321doyi"];
+  const privateKeys = ["lesbin2017", "abido73"];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,7 +38,7 @@ const SignupForm = (props) => {
       setError("");
       setLoad(true);
       await signup(emailRef.current.value, passwordRef.current.value);
-      history.push("/");
+      history.push("/todo");
     } catch {
       setError("Failed to create account! Try again");
     }

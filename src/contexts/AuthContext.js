@@ -11,24 +11,6 @@ export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState();
   const [groupID, setGroupID] = useState();
-  const [todos, setTodos] = useState([]);
-
-  const onTodos = async (groupID) => {
-    return db
-      .collection("todos")
-      .where("groupID", "==", groupID)
-      .get()
-      .then((querySnapshot) => {
-        var todoList = [];
-        querySnapshot.forEach((doc) => {
-          todoList.push(doc.data());
-        });
-        setTodos(todoList);
-      })
-      .catch((error) => {
-        console.log("Error getting documents: ", error);
-      });
-  };
 
   const signup = (email, password) => {
     return auth.createUserWithEmailAndPassword(email, password);
@@ -74,7 +56,6 @@ export function AuthProvider({ children }) {
     login,
     logout,
     groupID,
-    todos,
   };
 
   return (
