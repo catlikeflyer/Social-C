@@ -6,6 +6,7 @@ import TodoPage from "./pages/Todo";
 import Home from "./pages/Home";
 import { AuthProvider } from "./contexts/AuthContext";
 import Signup from "./pages/SignUp";
+import MemoryPage from "./pages/MemoryLane";
 
 function App() {
   return (
@@ -19,6 +20,9 @@ function App() {
             </Route>
             <Route exact path="/todo">
               <TodoPage />
+            </Route>
+            <Route exact path="/memories">
+              <MemoryPage />
             </Route>
             <Route exact path="/signup">
               <Signup />

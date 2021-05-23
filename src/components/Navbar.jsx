@@ -8,7 +8,7 @@ import {
   Nav,
   NavItem,
   NavLink,
-  Button
+  Button,
 } from "reactstrap";
 import { useHistory } from "react-router";
 
@@ -16,7 +16,7 @@ const Navigation = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const { currentUser, logout } = useAuth();
   const [error, setError] = useState();
-  const history = useHistory()
+  const history = useHistory();
 
   const toggle = () => setIsOpen(!isOpen);
 
@@ -29,7 +29,7 @@ const Navigation = (props) => {
       history.push("/");
     } catch {
       setError("Failed to logout");
-      console.log(error)
+      console.log(error);
     }
   };
   return (
@@ -40,9 +40,14 @@ const Navigation = (props) => {
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             {currentUser ? (
-              <NavItem>
-                <NavLink href="/todo">To-Do</NavLink>
-              </NavItem>
+              <>
+                <NavItem>
+                  <NavLink href="/todo">To-Do</NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink href="/memories">Memories</NavLink>
+                </NavItem>
+              </>
             ) : (
               <NavItem>
                 <NavLink href="/signup">Sign Up</NavLink>

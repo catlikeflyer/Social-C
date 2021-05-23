@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "reactstrap";
-import TodoCard from "../components/Card";
+import MemoryCard from "../components/MemoryCards";
 import Header from "../components/Jumbotron";
-import TodoModal from "../components/TodoAdd";
+import MemoryModal from "../components/MemoryAdd";
 import { useAuth } from "../contexts/AuthContext";
 import { db } from "../firebase";
 
-const TodoPage = () => {
+const MemoryPage = () => {
   const { groupID } = useAuth();
-  const [todos, setTodos] = useState([]);
+  const [memories, setMemories] = useState([]);
 
-  const getTodos = async () => {
-    db.collection("todos").onSnapshot((querySnapshot) => {
+  const getMemories = async () => {
+    db.collection("memories").onSnapshot((querySnapshot) => {
       const data = [];
       querySnapshot.forEach((doc) => {
         if (doc.data().groupID === groupID) {
@@ -19,36 +19,36 @@ const TodoPage = () => {
           console.log(doc.data());
         }
       });
-      setTodos(data);
+      setMemories(data);
     });
   };
 
   useEffect(() => {
-    getTodos();
-    console.log(todos);
-  }, [todos]);
+    getMemories();
+    console.log(memories);
+  }, [memories]);
 
   return (
     <Container fluid={true} style={{ padding: "0px", position: "relative" }}>
       <Header
-        name="To-Do List"
-        description="Our one-and-only things to do"
-        page="todo"
+        name="Memory Lane"
+        description="Unrepeatable experiences"
+        page="memory"
         groupID={groupID}
-        instructions="Click the button below to add a thing to do and copy the image url you'd like as thumbnail in the corresponding box."
+        instructions="Click the button below to add a thing to do and upload an image to use as thumbnail."
       />
       <Container>
-        <TodoModal groupID={groupID} />
+        <MemoryModal groupID={groupID} />
 
         <Row>
-          {todos.map((todo) => {
+          {memories.map((memory) => {
             return (
               <Col
                 md="4"
                 sm="12"
                 style={{ paddingTop: "1vh", paddingBottom: "1vh" }}
               >
-                <TodoCard {...todo} />
+                <MemoryCard {...memory} />
               </Col>
             );
           })}
@@ -58,4 +58,4 @@ const TodoPage = () => {
   );
 };
 
-export default TodoPage;
+export default MemoryPage;
